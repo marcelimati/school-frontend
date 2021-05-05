@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  API: "https://api.kawaiineko.pl",
-  front: "https://school.kawaiineko.pl"
+  API: "Your API link goes here",
+  front: "Your frontend link goes here"
 };
 
 /*
