@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve -o --ssl --ssl-key /etc/letsencrypt/live/kawaiineko.pl/privkey.pem --ssl-cert /etc/letsencrypt/live/kawaiineko.pl/fullchain.pem --public-host https://school.kawaiineko.pl",
+    "start": "ng serve -o",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
