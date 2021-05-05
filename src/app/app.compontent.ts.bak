@@ -1,0 +1,90 @@
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { AuthService } from './auth/auth.service';
+import { User } from './users/user';
+import { UsersService } from './users/users.service';
+
+import { Subject } from './settings/subject';
+import { SubjectsService } from './settings/subjects.service';
+import { AppService } from './app.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  currentUser: User;
+  public subjects: Subject[];
+
+  public isCollapsed = true;
+
+    constructor(
+        private router: Router,
+        private subjectsService: SubjectsService,
+        private authService: AuthService,
+        private usersService: UsersService,
+        private appService: AppService,
+    ) {
+        this.authService.currentUser.subscribe(x => this.currentUser = x);
+        this.router.events.subscribe( val => {
+          if (this.currentUser)
+          {
+            this.getSubjects();
+            // this.show();
+          }
+        })
+    }
+
+    ngOnInit(): void {
+      if (this.currentUser)
+      {
+        this.getSubjects();
+        this.show();
+      }
+      else
+      {
+        this.hide();
+      }
+    }
+
+    collapse() {
+      this.isCollapsed = !this.isCollapsed;
+    }
+
+    logout() {
+        this.authService.logout();
+        this.router.navigate(['/login']);
+        this.hide();
+    }
+    hide() {
+      document.getElementById("sidenav").style.width = "0";
+      document.getElementById("main").style.marginLeft = "0";
+      document.getElementById("openmenu").style.display = "block";
+      // document.getElementById("main").style.left = "0";
+      // document.getElementById("main").style.top = "0";
+      document.body.style.backgroundImage = "url('http://kawaiineko.pl:4200/assets/BaseLevel/Base_white.png')";
+    }
+    show() {
+      document.getElementById("sidenav").style.width = "24.3vh";
+      document.getElementById("main").style.marginLeft = "24.3vh";
+      document.getElementById("openmenu").style.display = "none";
+      document.body.style.backgroundImage = "url('http://kawaiineko.pl:4200/assets/BaseLevel/Background_combined.png')";
+    }
+    async getSubjects()
+    {
+      // console.log(this.currentUser.id);
+      await this.appService.getSubjects(this.currentUser);
+      await this.setSubjects()
+      
+      // console.log(this.subjects);
+    }
+
+    async setSubjects()
+    {
+      this.subjects = this.appService.subjects;
+      console.log(this.appService.subjects);
+      //subjects = AppService.subjects;
+    }
+}

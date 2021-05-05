@@ -1,0 +1,105 @@
+<!-- https://thenounproject.com/ -->
+<!-- Icons taken from the website above -->
+<nav class="navbar navbar-expand-md navbar-dark bg-black">
+
+    <button *ngIf="currentUser" class="navbar-toggler" type="button" (click)="collapse()" [attr.aria-expanded]="!isCollapsed" data-toggle="collapse" aria-controls="Collapse navbar" aria-label="Navbar toggler">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" [ngbCollapse]="isCollapsed">
+        <div class="navbar-nav mr-auto" style="flex-direction: row;">
+            <div>
+                <a class="nav-item openbtn" id="openmenu" style="font-size:30px; cursor:pointer; display: none;" (click)="show()">&#9776;</a>
+            </div>
+
+            <div *ngIf="currentUser">
+                <a class="nav-item" routerLink="/calendar">
+                    <img src="/assets/TopLevel/calendar.png" style="width:40px; height: 40px;">
+                </a>
+            </div>
+        </div>
+
+        <!-- <div class="navbar-nav mx-auto" style="flex-direction: row;" *ngIf="currentUser">
+            
+            <form class="form-inline" style="flex-direction: row;">
+                <input class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 300px;">
+                <button class="btn" type="submit" style= "background-image: url(/assets/TopLevel/search.png); background-size: 25px 25px; background-repeat: no-repeat; width:30px; height: 30px; margin-left: 5px;"></button>
+            </form>
+            
+        </div> -->
+
+        <div class="navbar-nav mx-auto" *ngIf="currentUser" style="flex-direction: row;">
+            <!-- <div *ngIf="currentUser.role == 'ADMIN' && isCollapsed == true">
+                <img class= "ml-sm-3" src="/assets/TopLevel/partingtop1.png" style="width:3px; height: 45px">
+            </div> -->
+            
+
+            <!-- <div *ngIf="currentUser.role == 'ADMIN'">
+                <a class="nav-item nav-link" routerLink="/register">
+                    <img src="/assets/TopLevel/plus.png" style="width:30px; height: 30px;">
+                </a>
+            </div> -->
+        </div>
+
+        <div class="navbar-nav" *ngIf="currentUser" style="flex-direction: row;"> <!-- ml-auto -->
+            <div *ngIf="currentUser.role == 'ADMIN'">
+                <a class="nav-item nav-link ml-sm-2" routerLink="/settings">
+                    <img src="/assets/TopLevel/settings.png" style="width:30px; height: 30px;">
+                </a>
+            </div>
+
+            <div *ngIf="currentUser.role == 'ADMIN'">
+                <a class="nav-item nav-link" routerLink="/users">
+                    <img src="/assets/TopLevel/profile.png" style="width:30px; height: 30px;">
+                </a>
+            </div>
+
+            <a class="nav-item nav-link active" routerLink="/profile">{{currentUser.login}} </a>
+            <a class="nav-item nav-link" style="cursor: pointer" (click)="logout()"><img src="/assets/TopLevel/logout.png" style="width:30px; height: 30px;"></a>
+        </div>
+    </div>
+    
+</nav>
+
+<div class="leftnav" id="sidenav">
+    <a href="javascript:void(0)" class="closebtn" (click)="hide()" >&times;</a>
+    <div class="row">
+        <div class="col-12" *ngIf="currentUser">
+            <a routerLink="/"><img src="/assets/logo1.png" style="width: 100%;"> </a>
+            <br>
+            <div class="name">Przedmioty</div>
+            <a><img src="assets/TopLevel/partingbottom.png" style="width: 100%;"> </a>
+            <!-- Div pętla przedmiotów z bazy -->
+            <div>
+                <ul class="subjects">
+                    <li *ngFor="let subject of subjects">
+                    <a routerLink="/subject/{{subject._id}}">{{subject.name}}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="name">Oceny</div>
+            <a><img src="assets/TopLevel/partingbottom.png" style="width: 100%;"> </a>
+            <ul class="subjects" *ngIf="grade.length != 0">
+                <li *ngFor="let task of tasks; let j = index">
+                <a routerLink="/subject/{{task.subject}}/{{task._id}}"> {{ j+1 }}: {{ task.name }} Ocena: {{ grade[j]}} </a>
+                </li>
+            </ul>
+            <div class="name">Egzaminy</div>
+            <a><img src="assets/TopLevel/partingbottom.png" style="width: 100%;"> </a>
+            <ul class="subjects">
+                <li *ngFor="let task of tasks; let j = index">
+                <a routerLink="/subject/{{task.subject}}/{{task._id}}"> {{ j+1 }}: {{ subjectname[j] }} - {{ task.name }} </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" id="container">
+    <div class="row">
+        <div class="col-12">
+            <app-alert></app-alert>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

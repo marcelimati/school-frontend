@@ -1,0 +1,57 @@
+.bg-black {
+    background-color: #202224;
+}
+
+.navbar {
+    min-height:57px !important
+}
+
+.leftnav {
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    background-color: #1f1f1f;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    color:white;
+}
+
+.container-fluid {
+    height: calc(94% - 62px);
+    overflow-x: hidden;
+    scrollbar-width: none;
+}
+
+.container-fluid::-webkit-scrollbar { 
+    display: none;
+}
+
+.closebtn {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    font-size: 50px;
+    margin-left: 50px;
+    text-decoration: none;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.openbtn {
+    text-decoration: none;  
+    color: #818181;
+    display: block;
+}
+
+.subjects li {
+    list-style-type:none;
+    text-align: right;
+    margin-right: 1rem;
+}
+.name {
+    text-align: right;
+    margin-right: 1rem;
+}
