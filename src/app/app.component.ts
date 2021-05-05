@@ -105,12 +105,9 @@ export class AppComponent {
 
         this.subjectService.getAllTasksFromClassroom(user.classroom).subscribe(task => {
           this.tasks = task;
-          // this.grade.push(task.grade)
-          // console.log(this.tasks.grade);
           var editedtasks = JSON.stringify(task);
           var parsed = JSON.parse(editedtasks);
-
-          // console.log(parsed);
+          
           for (var j = 0; j<parsed.length; j++)
           {
             if (parsed[j].grade != undefined)
@@ -123,7 +120,6 @@ export class AppComponent {
             }
           }
           // if complete don't show
-          // console.log(task);
           for (var i = 0; i<Object.keys(task).length; i++)
           {
             this.subjectsService.getSubject(task[i].subject).subscribe( subject => {
@@ -131,16 +127,6 @@ export class AppComponent {
             });
           }
         });
-        
-        // this.subjectService.getDataByClassroom(user.classroom).subscribe(task => {
-        //     this.tasks = task;
-        //     for (var i = 0; i<Object.keys(task).length; i++)
-        //     {
-        //       this.subjectsService.getSubject(task[i].subject).subscribe( subject => {
-        //         this.subjectname.push(subject.name);
-        //       });
-        //     }
-        //   });
       });
     }
 }
