@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  API: "https://api.kawaiineko.pl",
-  front: "https://school.kawaiineko.pl"
+  API: "Your API link goes here",
+  front: "Your frontend link goes here"
 };
