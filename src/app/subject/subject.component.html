@@ -1,0 +1,149 @@
+<!-- https://github.com/progtarek/angular-drag-n-drop-directive -->
+
+<div class="d-flex justify-content-center"><h2> {{ subject }} </h2></div>
+
+<div *ngIf="taskid || role=='TEACHER'">
+  <div class="dropzone">
+      <input type="file" title=" " multiple (change)="fileHandler($event)" />
+      <img src="assets/img/dnd/ic-upload-file.svg" alt="">
+      <h3>Wrzuć plik</h3>
+      <h3>lub</h3>
+      <label>Przeglądaj pliki</label>
+  </div>
+  <div *ngIf="role=='TEACHER'" class="d-flex justify-content-center"> Nazwa: <input type="text" id="taskname"> </div>
+  <div class="d-flex justify-content-center"><button (click)="submitForm()"> Upload </button></div>
+</div>
+
+<div class="files-list">
+  <div class="single-file" *ngFor="let file of files; let i = index">
+    <img src="assets/img/dnd/ic-file.svg" width="45px" alt="file">
+    <div class="info">
+      <h4 class="name">
+        {{ file?.name }}
+      </h4>
+      <p class="size">
+        {{ formatBytes(file?.size) }}
+      </p>
+      <app-progress [progress]="file?.progress"></app-progress>
+    </div>
+    <img src="assets/img/dnd/ic-delete-file.svg" class="delete" width="20px" alt="file" (click)="deleteFile(i)">
+  </div>
+</div>
+
+<div *ngIf="taskid">
+  <div class="uploaded-files-list" *ngIf="role=='USER'">
+    <div> Twoje zadania do zrobienia
+      <div *ngFor="let task of tasks; let k = index">
+          <div class="single-file" >
+            <img src="assets/img/dnd/ic-file.svg" width="45px" alt="file">
+              <div class="info">
+              <h4 class="name">
+                {{ task?.file.originalname }}
+              </h4>
+              <p class="size">
+                {{ formatBytes(task?.file.size) }}
+              </p>
+              <app-progress [progress]="task?.progress"></app-progress>
+            </div>
+            <img src="assets/img/dnd/ic-download-file.svg" class="download" width="20px" alt="file" (click)="downloadFileFromClassroom(task._id, k)">
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="uploaded-files-list">
+  <div *ngIf="role=='TEACHER'">
+
+    <div *ngFor="let task of tasks; let i = index"> {{ task.name }}
+      <div class="single-file" >
+        <img src="assets/img/dnd/ic-file.svg" width="45px" alt="file">
+          <div class="info">
+          <h4 class="name">
+            {{ teacherfiles[i]?.file.originalname }}
+          </h4>
+          <p class="size">
+            {{ formatBytes(teacherfiles[i]?.file.size) }}
+          </p>
+          <app-progress [progress]="teacherfiles[i]?.progress"></app-progress>
+        </div>
+        <img src="assets/img/dnd/ic-download-file.svg" class="download" width="20px" alt="file" (click)="downloadTeacherFile(teacherfiles[i]._id)">
+      </div>
+    </div>
+
+      <div *ngIf="uploadedFiles.length != 0"> Do oceny </div>
+      <div *ngFor="let filee of uploadedFiles; let j = index">
+        {{ nickname[j] }} - {{ taskname[j] }} - Ocena:  
+        <select id="ocena{{j}}">
+          <option value = "1"> 1 </option>
+          <option value = "2"> 2 </option>
+          <option value = "3"> 3 </option>
+          <option value = "4"> 4 </option>
+          <option value = "5"> 5 </option>
+          <option value = "6"> 6 </option>
+        </select>
+          <button *ngIf="taskid" (click)="putGrade(j, filee.userid)"> Oceń </button>
+        <div class="single-file" >
+          <img src="assets/img/dnd/ic-file.svg" width="45px" alt="file">
+            <div class="info">
+            <h4 class="name">
+              {{ filee?.file.originalname }}
+            </h4>
+            <p class="size">
+              {{ formatBytes(filee?.file.size) }}
+            </p>
+            <app-progress [progress]="filee?.progress"></app-progress>
+          </div>
+          <img src="assets/img/dnd/ic-download-file.svg" class="download" width="20px" alt="file" (click)="downloadFile(filee._id, j)">
+        </div>
+      </div>
+
+      <div *ngIf="gradedFiles.length != 0"> Ocenione </div>
+      <div *ngFor="let fileee of gradedFiles; let j = index">
+        {{ nickname[j] }} Ocena: 
+        <select id="ocena{{j}}">
+          <option value = "1"> 1 </option>
+          <option value = "2"> 2 </option>
+          <option value = "3"> 3 </option>
+          <option value = "4"> 4 </option>
+          <option value = "5"> 5 </option>
+          <option value = "6"> 6 </option>
+        </select>
+          <!-- <button (click)="editGrade(j, fileee.userid)"> Zmień ocenę </button> -->
+        <div class="single-file" >
+          <img src="assets/img/dnd/ic-file.svg" width="45px" alt="file">
+            <div class="info">
+            <h4 class="name">
+              {{ fileee?.file.originalname }}
+            </h4>
+            <p class="size">
+              {{ formatBytes(fileee?.file.size) }}
+            </p>
+            <app-progress [progress]="fileee?.progress"></app-progress>
+          </div>
+          <img src="assets/img/dnd/ic-download-file.svg" class="download" width="20px" alt="file" (click)="downloadFile(fileee._id, j)">
+        </div>
+      </div>
+  </div>
+
+  <div *ngIf="role=='USER'">
+    <div> Twoje wrzucone pliki
+      <div *ngFor="let filee of uploadedFiles; let j = index">
+        <div class="single-file" >
+          <img src="assets/img/dnd/ic-file.svg" width="45px" alt="file">
+            <div class="info">
+            <h4 class="name">
+              {{ filee?.file.originalname }}
+            </h4>
+            <p class="size">
+              {{ formatBytes(filee?.file.size) }}
+            </p>
+            <app-progress [progress]="filee?.progress"></app-progress>
+          </div>
+          <img src="assets/img/dnd/ic-download-file.svg" class="download" width="20px" alt="file" (click)="downloadFile(filee._id, j)">
+          <img src="assets/img/dnd/ic-delete-file.svg" class="delete" width="20px" alt="file" (click)="removeFile(filee._id, j)">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+.center {
+    text-align: center;
+}
+.subjects{
+    margin: 0;
+    padding: 0;
+}
+.subjects li {
+    list-style-type:none;
+    margin: 0;
+    text-align: center;
+}
+.name {
+    text-align: center;
+}

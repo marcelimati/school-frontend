@@ -1,0 +1,26 @@
+<div class="center">
+    Bieżące przedmioty
+    <ul class="subjects">
+        <li *ngFor="let subject of subjects">
+        <a routerLink="/subject/{{subject._id}}">{{subject.name}}</a>
+        </li>
+    </ul>
+</div>
+
+<div class="center">
+    Oceny
+    <ul class="subjects" *ngIf="grade.length != 0">
+        <li *ngFor="let task of tasks; let j = index">
+        <a routerLink="/subject/{{task.subject}}/{{task._id}}"> {{ j+1 }}: {{ task.name }} Ocena: {{ grade[j]}} </a>
+        </li>
+    </ul>
+</div>
+
+<div class="center">
+    Egzaminy
+    <ul class="subjects">
+        <li *ngFor="let task of tasks; let j = index">
+        <a routerLink="/subject/{{task.subject}}/{{task._id}}"> {{ j+1 }}: {{ subjectname[j] }} - {{ task.name }} </a>
+        </li>
+    </ul>
+</div>

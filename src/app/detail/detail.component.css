@@ -1,0 +1,24 @@
+.subjects {
+    /* margin: 0 0 2em 0; */
+    list-style-type: none;
+    padding: 0;
+    width: 15em;
+  }
+  .subjects li {
+    cursor: pointer;
+    position: relative;
+    /* left: 0; */
+    background-color: red;
+    margin-top: .5em;
+    padding: .3em 0;
+    height: 1.6em;
+    border-radius: 4px;
+    color:white;
+    text-align: center;
+  }
+  .subjects li:hover {
+    color: black;
+    left: .1em;
+  }
+
+  a {display: block}

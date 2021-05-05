@@ -1,0 +1,40 @@
+.subjects {
+    margin: 0 0 2em 0;
+    list-style-type: none;
+    padding: 0;
+    width: 15em;
+  }
+  .subjects li {
+    cursor: pointer;
+    position: relative;
+    left: 0;
+    background-color: #EEE;
+    margin: .5em;
+    padding: .3em 0;
+    height: 1.6em;
+    border-radius: 4px;
+  }
+  .subjects li:hover {
+    color: #607D8B;
+    background-color: #DDD;
+    left: .1em;
+  }
+  .subjects li.selected {
+    background-color: #CFD8DC;
+    color: white;
+  }
+  .subjects li.selected:hover {
+    background-color: #BBD8DC;
+    color: white;
+  }
+  .subjects .badge {
+    display: inline-block;
+    font-size: small;
+    line-height: 1em;
+    position: absolute;
+    left: 20em;
+    top: 0px;
+    height: 2.3em;
+  }
+
+  a {display: block}

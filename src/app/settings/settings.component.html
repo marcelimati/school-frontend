@@ -1,0 +1,61 @@
+<div class="d-flex justify-content-center">
+    <div class = "col-6">    
+        <p>Add new subject</p>
+
+        <form [formGroup]="addSubjectForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Subject name</label>
+            <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                <div *ngIf="f.name.errors.required">Subject name is required</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button [disabled]="loading" class="btn btn-primary">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Add
+            </button>
+        </div>
+        </form>
+
+        <p> Subjects list </p>
+
+        <ul class="subjects">
+            <li *ngFor="let subject of subjects">
+            <a routerLink="/subject/{{subject._id}}">{{subject.name}}</a> 
+            <button class="btn btn-sm btn-danger badge" title="delete subject" (click)="deleteSubject(subject)">x</button>
+        </li>
+        </ul>
+    </div>
+
+    <div class = "col-6">    
+        <p>Add new classroom</p>
+
+        <form [formGroup]="addClassroomForm" (ngSubmit)="onSubmitClassroom()">
+        <div class="form-group">
+            <label for="name">Classroom name</label>
+            <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && c.name.errors }" />
+            <div *ngIf="submitted && c.name.errors" class="invalid-feedback">
+                <div *ngIf="c.name.errors.required">Classroom name is required</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button [disabled]="loading" class="btn btn-primary">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Add
+            </button>
+        </div>
+        </form>
+
+        <p> Classroom list </p>
+
+        <ul class="subjects">
+            <li *ngFor="let classroom of classrooms">
+            <a routerLink="/classroom/{{classroom._id}}">{{classroom.name}}</a> 
+            <button class="btn btn-sm btn-danger badge" title="delete classroom" (click)="deleteClassroom(classroom)">x</button>
+         </li>
+        </ul>
+    </div>
+</div>

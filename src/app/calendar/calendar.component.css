@@ -1,0 +1,7 @@
+#calendar {
+	font-family: Verdana, Helvetica, sans-serif;
+    font-size: 30px;
+	width: 100%;
+	/* overflow-x: hidden;
+	z-index: 1; */
+}
